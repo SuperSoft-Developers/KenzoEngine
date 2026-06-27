@@ -1,0 +1,27 @@
+name: Build Windows
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Clonar repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar CMake
+        run: cmake -B build
+
+      - name: Compilar
+        run: cmake --build build --config Release
+
+      - name: Enviar EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: MiniConsoleEngine
+          path: build/Release/*.
